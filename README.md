@@ -6,7 +6,7 @@ Another year of Advent of Code solved using TypeScript :)
 
 | Day | Part1 | Part2 |
 |-----|-------|-------|
-| 01  |  <ul><li>- [X] </li><ul>  |  <ul><li>- [-] </li><ul>  |
+| 01  |  <ul><li>- [X] </li><ul>  |  <ul><li>- [x] </li><ul>  |
 | 02  |  <ul><li>- [X] </li><ul>  |  <ul><li>- [X] </li><ul>  |
 | 03  |  <ul><li>- [ ] </li><ul>  |  <ul><li>- [ ] </li><ul>  |
 | 04  |  <ul><li>- [ ] </li><ul>  |  <ul><li>- [ ] </li><ul>  |

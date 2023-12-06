@@ -28,11 +28,10 @@ function solvePartOne(): void {
   console.log(`Part One: ${sum}`);
 }
 
-// TODO: For me part 2 does not work, i am getting a slightly different value than the actually result. Probably i am not handling the "twone" case which should result in "21". Instead for me it results in "22" because only the "two" is recognized as a number
-// Result of this method = 54558, but actual result should be 54578
 function solvePartTwo(): void {
   const inputArr: string[] = Utility.readInputIntoStringArr(INPUT_FILE);
   const pattern = /(?:one|two|three|four|five|six|seven|eight|nine|\d)/gi;
+  const patternReverse = /(?:eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|\d)/gi;
 
 
   const lineResults: string[] = [];
@@ -42,7 +41,12 @@ function solvePartTwo(): void {
       return;
     }
 
-    lineResults.push(matches[0] + matches[matches.length - 1]);
+    const lastMatches = reverseString(line).match(patternReverse)?.map(reverseString)?.map(castToNumeric);
+    if (!lastMatches || !lastMatches[0]) {
+      return;
+    }
+
+    lineResults.push(matches[0] + lastMatches[0]);
   });
 
   const result = lineResults.map(val => Number(val)).reduce((acc, curr) => acc + curr, 0);
@@ -63,6 +67,10 @@ function castToNumeric(match: string) {
   }
 
   return mapper[match.toLocaleLowerCase()] || match;
+}
+
+function reverseString(str: string) {
+  return str.split("").reverse().reduce((acc, curr) => acc + curr, "");
 }
 
 solvePartOne();
