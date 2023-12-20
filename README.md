@@ -8,7 +8,7 @@ Another year of Advent of Code solved using TypeScript :)
 |-----|-------|-------|
 | 01  |  <ul><li>- [X] </li><ul>  |  <ul><li>- [x] </li><ul>  |
 | 02  |  <ul><li>- [X] </li><ul>  |  <ul><li>- [X] </li><ul>  |
-| 03  |  <ul><li>- [ ] </li><ul>  |  <ul><li>- [ ] </li><ul>  |
+| 03  |  <ul><li>- [X] </li><ul>  |  <ul><li>- [X] </li><ul>  |
 | 04  |  <ul><li>- [ ] </li><ul>  |  <ul><li>- [ ] </li><ul>  |
 | 05  |  <ul><li>- [ ] </li><ul>  |  <ul><li>- [ ] </li><ul>  |
 | 06  |  <ul><li>- [ ] </li><ul>  |  <ul><li>- [ ] </li><ul>  |
