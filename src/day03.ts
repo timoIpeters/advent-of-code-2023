@@ -1,7 +1,7 @@
 import { Utility } from './utilities';
 
 /** filename -> located in the data folder */
-const INPUT_FILE = 'example-03.txt';
+const INPUT_FILE = 'input-03.txt';
 
 interface Range {
   from: number;
@@ -30,7 +30,7 @@ function solvePartOne(): void {
   }
 
   const usableCharsMatrix = getMatrixCoords(inputArr);
-  const merged = mergeDigits(usableCharsMatrix);
+  const merged = mergeDigits(usableCharsMatrix, false);
   const filtered = filterAdjacentNumbers(merged);
   const result = filtered.reduce((acc, curr) => acc + curr.num, 0);
   console.log(`Part One: ${result}`);
@@ -51,7 +51,7 @@ function getMatrixCoords(inputArr: string[]): MappedChar[][] {
   return usableCharsMatrix;
 }
 
-function mergeDigits(mappedCharStruct: MappedChar[][]): MappedNumber[] {
+function mergeDigits(mappedCharStruct: MappedChar[][], removeNonStarSymbols: boolean): MappedNumber[] {
   const result: MappedNumber[] = [];
 
   mappedCharStruct.forEach((row) => {
@@ -79,7 +79,14 @@ function mergeDigits(mappedCharStruct: MappedChar[][]): MappedNumber[] {
         }
       } else {
         // Non-digit item, add it to the result array
-        result.push({ num: NaN, rowIdx: item.rowIdx, columnRange: { from: item.colIdx, to: item.colIdx } });
+        // if the removeNonStarSymbols flag is set, only * symbols are being added
+        if (removeNonStarSymbols) {
+          if (item.c === "*") {
+            result.push({ num: NaN, rowIdx: item.rowIdx, columnRange: { from: item.colIdx, to: item.colIdx } });
+          }
+        } else {
+          result.push({ num: NaN, rowIdx: item.rowIdx, columnRange: { from: item.colIdx, to: item.colIdx } });
+        }
         currentGroup = null; // Reset currentGroup for non-digit items
       }
     });
@@ -126,10 +133,31 @@ function solvePartTwo(): void {
   }
 
   const usableCharsMatrix = getMatrixCoords(inputArr);
-  console.log(usableCharsMatrix);
-
-  const result: number = -1;
+  const merged = mergeDigits(usableCharsMatrix, true);
+  const ratios = getGearRatios(merged);
+  const result: number = ratios.reduce((acc, curr) => acc + curr, 0);
   console.log(`Part Two: ${result}`);
+}
+
+function getGearRatios(grid: MappedNumber[]): number[] {
+  const ratios: number[] = [];
+
+  // Iterate through grid items
+  for (const item of grid) {
+    if (isNaN(item.num)) {
+      // Check if the NaN item has two adjacent numbers
+      const adjacentNumbers = grid
+        .filter((otherItem) => isAdjacent(item, otherItem))
+        .filter((otherItem) => !isNaN(otherItem.num)); // Exclude NaN items
+
+      if (adjacentNumbers.length === 2) {
+        const ratio = adjacentNumbers.reduce((acc, curr) => acc * curr.num, 1);
+        ratios.push(ratio);
+      }
+    }
+  }
+
+  return ratios;
 }
 
 solvePartOne();
